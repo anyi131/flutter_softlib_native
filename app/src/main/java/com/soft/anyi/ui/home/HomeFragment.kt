@@ -17,10 +17,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.soft.anyi.R
-import com.soft.anyi.data.AppItem.AppCat
+import com.soft.anyi.data.AppCat
 import com.soft.anyi.data.AppItem
 import com.soft.anyi.data.SoftRepo
-import com.soft.anyi.ui.common.Ui.AppAction
+import com.soft.anyi.ui.common.AppAction
 import com.soft.anyi.ui.common.Ui
 import com.soft.anyi.util.Toasts
 import kotlinx.coroutines.launch

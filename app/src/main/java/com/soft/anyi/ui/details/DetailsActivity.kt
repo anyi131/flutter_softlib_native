@@ -22,7 +22,7 @@ import com.soft.anyi.ui.common.Ui
 import com.soft.anyi.ui.mine.VipActivity
 import com.soft.anyi.util.ApkInstaller
 import com.soft.anyi.util.FavStore
-import com.soft.anyi.util.FavStore.Prefs
+import com.soft.anyi.util.Prefs
 import com.soft.anyi.util.Sfx
 import com.soft.anyi.util.Toasts
 import kotlinx.coroutines.delay

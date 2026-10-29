@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.soft.anyi.R
 import com.soft.anyi.data.AppItem
 import com.soft.anyi.data.SoftRepo
-import com.soft.anyi.ui.common.Ui.AppAction
 import com.soft.anyi.ui.common.AppCard
 import com.soft.anyi.ui.common.Ui
 import com.soft.anyi.util.Sfx

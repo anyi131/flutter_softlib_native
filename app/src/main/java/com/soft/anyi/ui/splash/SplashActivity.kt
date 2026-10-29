@@ -24,7 +24,7 @@ import com.soft.anyi.data.ConfigRepo
 import com.soft.anyi.data.Session
 import com.soft.anyi.data.VersionRepo
 import com.soft.anyi.util.ApkInstaller
-import com.soft.anyi.util.FavStore.Prefs
+import com.soft.anyi.util.Prefs
 import com.soft.anyi.util.Toasts
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
