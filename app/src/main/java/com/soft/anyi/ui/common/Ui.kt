@@ -32,6 +32,44 @@ object Ui {
         }
     }
 
+    @JvmField
+    val card = { context: Context ->
+        LinearLayout(context).apply {
+            orientation = LinearLayout.VERTICAL
+            background = ContextCompat.getDrawable(context, R.drawable.bg_card)
+            val pad = dp(context, 12)
+            setPadding(pad, pad, pad, pad)
+        }
+    }
+
+    @JvmField
+    val sectionTitle = { context: Context, text: String ->
+        TextView(context).apply {
+            this.text = text
+            textSize = 16f
+            setTypeface(typeface, android.graphics.Typeface.BOLD)
+            setTextColor(ContextCompat.getColor(context, R.color.t1))
+        }
+    }
+
+    @JvmField
+    val pill = { context: Context, text: String, onClick: (View) -> Unit ->
+        TextView(context).apply {
+            this.text = text
+            textSize = 14f
+            setTextColor(androidx.core.content.ContextCompat.getColor(context, android.R.color.white))
+            background = androidx.core.content.ContextCompat.getDrawable(context, R.drawable.bg_pill_on)
+            gravity = android.view.Gravity.CENTER
+            val p = dp(context, 14)
+            setPadding(p, dp(context, 9), p, dp(context, 9))
+            setOnClickListener(onClick)
+        }
+    }
+
+    /** 空态（兼容旧调用：emptyView(ctx)） */
+    fun emptyView1(context: Context): View = emptyView(context, "暂无内容")
+    fun sectionTitle1(context: Context): TextView = sectionTitle(context, "")
+
     fun sectionTitle(context: Context, text: String): TextView =
         TextView(context).apply {
             text = text

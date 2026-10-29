@@ -95,7 +95,7 @@ class DetailsActivity : AppCompatActivity() {
         val col = LinearLayout(ctx).apply {
             orientation = LinearLayout.VERTICAL
             addView(TextView(ctx).apply {
-                text = a.name; textSize = 20f
+                text = a.title; textSize = 20f
                 setTypeface(typeface, android.graphics.Typeface.BOLD)
                 setTextColor(ctx.getColor(R.color.t1))
             })
@@ -220,8 +220,8 @@ class DetailsActivity : AppCompatActivity() {
                 val resolved = SoftRepo.resolve(a.id)
                 val url = resolved.optString("url")
                 if (url.isEmpty()) throw com.soft.anyi.data.Http.ApiException(-1, resolved.optString("msg", "未解析到直链"))
-                com.soft.anyi.data.UserRepo.downloadLog(a.name, a.id)
-                ApkInstaller.downloadAndInstall(this@DetailsActivity, url, a.name)
+                com.soft.anyi.data.UserRepo.downloadLog(a.title, a.id)
+                ApkInstaller.downloadAndInstall(this@DetailsActivity, url, a.title)
                 Toasts.s("已开始下载")
             } catch (e: Exception) {
                 Toasts.e(e.message ?: "下载失败")

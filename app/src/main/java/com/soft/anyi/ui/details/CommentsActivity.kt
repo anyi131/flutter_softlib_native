@@ -99,7 +99,7 @@ class CommentsActivity : AppCompatActivity() {
                     box.addView(center("还没有评论，来抢沙发"))
                     return@launch
                 }
-                list.forEach { r -> box.addView(item(r)) }
+                list.forEach { r -> box.addView(item(r.raw)) }
             } catch (e: Exception) { Toasts.e(e.message ?: "加载失败") }
         }
     }

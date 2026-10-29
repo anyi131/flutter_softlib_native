@@ -54,7 +54,8 @@ class MineFragment : Fragment() {
 
     private fun buildUi(ctx: android.content.Context, root: LinearLayout) {
         contentRoot = root
-        render(ctx)
+        this.ctx = ctx
+        render()
     }
 
     private fun refresh() {
@@ -91,7 +92,7 @@ class MineFragment : Fragment() {
                 background = ctx.getDrawable(R.drawable.bg_icon)
                 clipToOutline = true
                 layoutParams = LinearLayout.LayoutParams(Ui.dp(ctx, 56), Ui.dp(ctx, 56))
-                u?.avatar?.takeIf { it.startsWith("http") }?.let { load(it) { crossfade(true) } }
+                u?.avatar?.takeIf { it.startsWith("http") }?.let { io.coil_image.CoilImage.load(ctx, it, this) }
             })
             addView(LinearLayout(ctx).apply {
                 orientation = LinearLayout.VERTICAL

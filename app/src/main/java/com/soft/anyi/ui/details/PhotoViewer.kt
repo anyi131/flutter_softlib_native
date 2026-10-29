@@ -39,7 +39,7 @@ object PhotoViewer {
             gravity = Gravity.CENTER
             setPadding(0, 40, 0, 24)
         }
-        root.addView(page, ViewGroup.LayoutParams(-1, -2, Gravity.TOP))
+        root.addView(page, android.widget.FrameLayout.LayoutParams(-1, -2, Gravity.TOP))
         fun upd() { page.text = "${vp.currentItem + 1}/${urls.size}" }
         vp.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(p: Int) { upd() }

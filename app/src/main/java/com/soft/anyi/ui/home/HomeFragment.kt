@@ -35,8 +35,8 @@ class HomeFragment : Fragment() {
     private lateinit var catRow: LinearLayout
     private var listHolder: LinearLayout? = null
 
-    private var cats: List<Pair<String, String>> = emptyList()
-    private var currentCat = ""
+    private var cats: List<AppCat> = emptyList()
+    private var currentCat = 0
     private var apps: List<AppItem> = emptyList()
     private var loading = false
 
@@ -124,8 +124,7 @@ class HomeFragment : Fragment() {
         // 分类 pill
         catRow.removeAllViews()
         val all = listOf(AppCat(0, "全部")) + cats
-        all.forEach { c ->
-            val on = c.id == currentCat
+        all.forEach { c ->            val on = c.id == currentCat
             catRow.addView(TextView(ctx).apply {
                 text = c.title
                 textSize = 13f
@@ -202,6 +201,4 @@ class HomeFragment : Fragment() {
         card.setOnClickListener { AppAction.open(requireContext(), a) }
         return card
     }
-
-    private fun TextView.margin() {}
 }
