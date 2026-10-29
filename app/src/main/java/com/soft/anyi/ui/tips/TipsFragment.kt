@@ -52,7 +52,7 @@ class TipsFragment : Fragment() {
             clipToPadding = false
         }
         adapter = TipAdapter { tip ->
-            com.soft.anyi.util.ApkInstaller.openBrowser(tip.url)
+            com.soft.anyi.util.ApkInstaller.openBrowser(requireContext(), tip.url)
         }
         list.adapter = adapter
         refresh.addView(list, ViewGroup.LayoutParams(-1, -1))
@@ -67,7 +67,8 @@ class TipsFragment : Fragment() {
         lifecycleScope.launch {
             try {
                 // newsnow 热榜（服务端聚合）
-                val d = ToolboxRepo.media("newsnow") ?: ToolboxRepo.box2("newsnow")
+                val d = com.soft.anyi.data.ToolboxRepo.media("newsnow")
+                    ?: com.soft.anyi.data.ToolboxRepo.box2("newsnow")
                 tips.clear()
                 val arr = d?.optJSONArray("list")
                     ?: d?.optJSONArray("data")
@@ -85,7 +86,7 @@ class TipsFragment : Fragment() {
                         )
                     }
                 }
-                adapter.notifyDataSetChanged()
+                adapter.submit(tips.toList())
                 if (tips.isEmpty()) Toasts.s("暂无线报")
             } catch (e: Exception) {
                 Toasts.e("加载失败：${e.message}")

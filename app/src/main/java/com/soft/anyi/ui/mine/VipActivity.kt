@@ -44,7 +44,8 @@ class VipActivity : AppCompatActivity() {
     private fun load() {
         lifecycleScope.launch {
             try {
-                plans = PayRepo.plans()
+                val p = PayRepo.plans()
+                plans = p.first
                 render()
             } catch (e: Exception) { Toasts.e(e.message ?: "加载失败") }
         }

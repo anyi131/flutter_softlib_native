@@ -1,6 +1,7 @@
 package com.soft.anyi.ui.tools
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.soft.anyi.R
 import com.soft.anyi.data.ToolboxRepo
 import com.soft.anyi.ui.common.Ui
 import com.soft.anyi.util.Toasts

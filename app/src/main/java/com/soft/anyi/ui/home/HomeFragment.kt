@@ -104,8 +104,7 @@ class HomeFragment : Fragment() {
         refresh.isRefreshing = apps.isEmpty()
         lifecycleScope.launch {
             try {
-                val jobs = mutableListOf<kotlinx.coroutines.Job>()
-                jobs += launch { cats = SoftRepo.cats(force) }
+                launch { cats = SoftRepo.cats(force) }
                 apps = SoftRepo.apps(currentCat, force = force)
                 render()
             } catch (e: Exception) {
@@ -124,19 +123,18 @@ class HomeFragment : Fragment() {
 
         // 分类 pill
         catRow.removeAllViews()
-        val all = listOf("" to "全部") + cats
-        all.forEach { (id, label) ->
-            val on = id == currentCat
+        val all = listOf(AppCat(0, "全部")) + cats
+        all.forEach { c ->
+            val on = c.id == currentCat
             catRow.addView(TextView(ctx).apply {
-                text = label
+                text = c.title
                 textSize = 13f
                 setTextColor(ctx.getColor(if (on) R.color.brand else R.color.t2))
                 background = ctx.getDrawable(if (on) R.drawable.bg_pill_on else R.drawable.bg_pill_off)
                 setPadding(Ui.dp(ctx, 14), Ui.dp(ctx, 6), Ui.dp(ctx, 14), Ui.dp(ctx, 6))
-                margin()
                 setOnClickListener {
-                    if (currentCat == id) return@setOnClickListener
-                    currentCat = id
+                    if (currentCat == c.id) return@setOnClickListener
+                    currentCat = c.id
                     load()
                 }
             }, LinearLayout.LayoutParams(-2, -2).apply { marginEnd = Ui.dp(ctx, 8) })
@@ -185,7 +183,7 @@ class HomeFragment : Fragment() {
                     a.version.takeIf { it.isNotBlank() },
                     a.sizeText.takeIf { it.isNotBlank() && it != "-" },
                     a.developer.takeIf { it.isNotBlank() }
-                ).joinToString(" · ").ifBlank { a.brief }
+                ).joinToString(" · ").ifBlank { "" }
                 textSize = 11f
                 setTextColor(ctx.getColor(R.color.t2))
                 maxLines = 1

@@ -2,7 +2,6 @@ package com.soft.anyi.data
 
 import android.content.Context
 import com.soft.anyi.SoftApp
-import com.soft.anyi.util.Session
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject

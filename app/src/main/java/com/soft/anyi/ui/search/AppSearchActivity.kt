@@ -1,81 +1,94 @@
 package com.soft.anyi.ui.search
 
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.soft.anyi.R
 import com.soft.anyi.data.AppItem
 import com.soft.anyi.data.SoftRepo
 import com.soft.anyi.ui.common.AppAction
+import com.soft.anyi.ui.common.AppCard
 import com.soft.anyi.ui.common.Ui
-import com.soft.anyi.ui.home.AppAdapter
+import com.soft.anyi.util.Sfx
 import com.soft.anyi.util.Toasts
 import kotlinx.coroutines.launch
 
-/** 搜索页（对应 AppSearchPage：即时搜索 + 结果列表） */
+/** 软件搜索页（对应 home/search_page.dart） */
 class AppSearchActivity : AppCompatActivity() {
+    private lateinit var box: ViewGroup
+    private var results: List<AppItem> = emptyList()
 
-    private var input: EditText? = null
-    private lateinit var adapter: AppAdapter
-    private lateinit var resultBox: LinearLayout
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreate(s: Bundle?) {
+        super.onCreate(s)
         val ctx = this
         val root = LinearLayout(ctx).apply {
             orientation = LinearLayout.VERTICAL
             setBackgroundColor(ctx.getColor(R.color.page_bg))
             setPadding(Ui.dp(ctx, 16), Ui.dp(ctx, 12), Ui.dp(ctx, 16), 0)
         }
-
-        input = EditText(ctx).apply {
-            hint = "搜索软件"
-            imeOptions = EditorInfo.IME_ACTION_SEARCH
+        // 顶栏
+        root.addView(LinearLayout(ctx).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = android.view.Gravity.CENTER_VERTICAL
+            addView(TextView(ctx).apply {
+                text = "←"
+                textSize = 22f
+                setPadding(0, 0, Ui.dp(ctx, 16), 0)
+                setOnClickListener { finish() }
+            })
+            addView(TextView(ctx).apply {
+                text = "搜索软件"
+                textSize = 18f
+                setTypeface(typeface, android.graphics.Typeface.BOLD)
+                setTextColor(ctx.getColor(R.color.t1))
+            })
+        })
+        // 搜索框
+        val input = EditText(ctx).apply {
+            hint = "输入名称关键字"
             singleLine = true
+            imeOptions = android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH
             background = ctx.getDrawable(R.drawable.bg_card)
             setPadding(Ui.dp(ctx, 14), Ui.dp(ctx, 10), Ui.dp(ctx, 14), Ui.dp(ctx, 10))
-            setOnEditorActionListener { _, action, _ ->
-                if (action == EditorInfo.IME_ACTION_SEARCH) { doSearch(); true } else false
+            setOnEditorActionListener { _, _, event ->
+                if (event == null) { search(input.text.toString()); true } else false
             }
         }
-        root.addView(input, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = Ui.dp(ctx, 12) })
-
-        resultBox = LinearLayout(ctx).apply { orientation = LinearLayout.VERTICAL }
-        val list = RecyclerView(ctx).apply {
-            layoutManager = LinearLayoutManager(ctx)
-            clipToPadding = false
-            setPadding(0, 0, 0, Ui.dp(ctx, 32))
-        }
-        adapter = AppAdapter { AppAction.open(ctx, it) }
-        list.adapter = adapter
-        resultBox.addView(list, LinearLayout.LayoutParams(-1, -2))
-
-        val scroll = androidx.core.widget.NestedScrollView(ctx).apply { addView(resultBox) }
-        root.addView(scroll, LinearLayout.LayoutParams(-1, 0, 1f))
+        root.addView(input, LinearLayout.LayoutParams(-1, -2).apply { topMargin = Ui.dp(ctx, 12) })
+        // 结果容器
+        box = LinearLayout(ctx).apply { orientation = LinearLayout.VERTICAL }
+        root.addView(box, LinearLayout.LayoutParams(-1, -2).apply { topMargin = Ui.dp(ctx, 8) })
         setContentView(root)
-
-        supportActionBar?.title = "搜索"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun doSearch() {
-        val k = input?.text?.toString()?.trim() ?: ""
+    private fun search(kw: String) {
+        val k = kw.trim()
         if (k.isEmpty()) return
+        Sfx.click()
         lifecycleScope.launch {
             try {
-                val apps = SoftRepo.apps(keyword = k, force = true)
-                adapter.submit(apps)
-                if (apps.isEmpty()) Toasts.s("没有找到相关软件")
+                results = SoftRepo.search(k)
+                render()
             } catch (e: Exception) {
                 Toasts.e("搜索失败：${e.message}")
             }
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean { finish(); return true }
+    private fun render() {
+        val ctx = this
+        box.removeAllViews()
+        if (results.isEmpty()) {
+            box.addView(Ui.emptyView(ctx, "没有找到相关软件"))
+            return
+        }
+        results.forEach { a -> box.addView(AppCard.build(ctx, a)) }
+    }
 }

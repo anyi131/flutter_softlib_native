@@ -114,6 +114,14 @@ object WishRepo {
     }
 }
 
+/** 心愿单仓库别名（MineFragment 用 Wish.list/add） */
+object Wish {
+    val list get() = WishRepo.list
+    val mine get() = WishRepo.mine
+    suspend fun add(name: String, desc: String): String = WishRepo.add(name, desc)
+    suspend fun vote(id: Int): String = WishRepo.vote(id)
+}
+
 /** 任务中心（对应 TaskService：输入口令领取奖励） */
 object TaskRepo {
     suspend fun config(): JSONObject? = withContext(Dispatchers.IO) {
@@ -136,3 +144,6 @@ object TaskRepo {
         d.optString("msg", "已提交")
     }
 }
+
+/** 评论仓库适配（CommentsActivity 调用名对齐）——已并入 SoftRepo.kt */
+

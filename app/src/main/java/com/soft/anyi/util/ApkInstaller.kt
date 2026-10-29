@@ -90,6 +90,15 @@ object ApkInstaller {
         Toasts.e("打开失败：${e.message}")
         false
     }
+
+    /** 带 Context 的重载（Fragment 里传 requireContext()） */
+    fun openBrowser(ctx: Context, url: String): Boolean = try {
+        ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        true
+    } catch (e: Exception) {
+        Toasts.e("打开失败：${e.message}")
+        false
+    }
 }
 
 /**

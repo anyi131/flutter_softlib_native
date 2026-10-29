@@ -120,4 +120,18 @@ object SoftRepo {
         }
         Http.postAsync("/api/softlib/app/download_result", form) { _, _ -> }
     }
+
+    // ── 评论（对应 ReviewService，CommentsActivity 调用名） ──
+    suspend fun reviews(appId: Int, page: Int = 1): List<ReviewRepo.Review> = ReviewRepo.list(appId, page)
+    suspend fun reviewCreate(appId: Int, score: Int = 5, content: String) = ReviewRepo.create(appId, score, content)
+    suspend fun reviewLike(id: Int) = ReviewRepo.like(id)
+    suspend fun reviewReply(appId: Int, id: Int, content: String) = ReviewRepo.reply(id, content)
+
+    /** 关键字搜索（对应 soft_search 接口） */
+    suspend fun search(kw: String, limit: Int = 30): List<AppItem> {
+        if (kw.isBlank()) return emptyList()
+        val d = Http.post("/api/softlib/app/search", mapOf("keyword" to kw, "limit" to limit))
+        val arr = d.optJSONArray("list") ?: return emptyList()
+        return (0 until arr.length()).mapNotNull { arr.optJSONObject(it) }.map { AppItem.fromJson(it) }
+    }
 }

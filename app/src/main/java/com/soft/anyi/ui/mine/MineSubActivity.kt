@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.soft.anyi.R
+import com.soft.anyi.data.MessageRepo
 import com.soft.anyi.data.UserRepo
 import com.soft.anyi.ui.common.Ui
 import com.soft.anyi.util.Sfx
@@ -114,9 +115,9 @@ class MineSubActivity : AppCompatActivity() {
                 setOnClickListener { onClick?.invoke() }
             })
         }.also { v ->
-            (v.layoutParams ?: LinearLayout.LayoutParams(-1, -2)).let { p ->
-                p.marginTop = Ui.dp(ctx, 8); v.layoutParams = p
-            }
+            val m = LinearLayout.LayoutParams(-1, -2)
+            m.topMargin = Ui.dp(ctx, 8)
+            v.layoutParams = m
         }
     }
 
@@ -192,14 +193,15 @@ class MineSubActivity : AppCompatActivity() {
     private fun renderMessages() {
         lifecycleScope.launch {
             try {
-                val list = com.soft.anyi.data.MessageRepo.list()
-                com.soft.anyi.data.MessageRepo.readAll()
+                // 拉取后把未读标记已读（对应 MessageService.read_all；list 返回 Pair(list, hasUnread)）
+                val (list, hasUnread) = MessageRepo.list()
+                if (hasUnread) MessageRepo.markRead(-1)
                 box.removeAllViews()
                 if (list.isEmpty()) { box.addView(center("暂无消息")); return@launch }
                 list.forEach { m ->
                     box.addView(card(
-                        m.optString("title"),
-                        m.optString("content"),
+                        m.title,
+                        m.content,
                         null, null
                     ))
                 }

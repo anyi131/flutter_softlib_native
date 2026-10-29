@@ -39,6 +39,12 @@ object PayRepo {
         Plan.listFrom(d)
     }
 
+    suspend fun plans(): Pair<List<Plan>, List<Plan>> = withContext(Dispatchers.IO) {
+        val vip = vipPlans()
+        val rec = rechargePlans()
+        Pair(vip, rec)
+    }
+
     /** 创建支付订单，返回跳转链接 */
     suspend fun create(planId: Int, payType: String = "wxpay"): Order = withContext(Dispatchers.IO) {
         val d = Http.post(

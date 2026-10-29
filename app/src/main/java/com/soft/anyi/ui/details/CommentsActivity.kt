@@ -67,7 +67,7 @@ class CommentsActivity : AppCompatActivity() {
                 if (!Session.requireLogin()) return@setOnClickListener
                 lifecycleScope.launch {
                     try {
-                        SoftRepo.reviewCreate(appId, t)
+                        SoftRepo.reviewCreate(appId, 5, t)
                         input.setText("")
                         Toasts.s("已发布")
                         Sfx.play("message")
@@ -141,7 +141,7 @@ class CommentsActivity : AppCompatActivity() {
             ops.addView(op("👍 赞 ${r.optInt("likes", 0)}") {
                 if (!Session.requireLogin()) return@op
                 lifecycleScope.launch {
-                    try { SoftRepo.reviewLike(r.optString("id")); load() } catch (e: Exception) { Toasts.e(e.message ?: "失败") }
+                    try { SoftRepo.reviewLike(r.optInt("id")); load() } catch (e: Exception) { Toasts.e(e.message ?: "失败") }
                 }
             })
             ops.addView(op("回复") {
@@ -154,7 +154,7 @@ class CommentsActivity : AppCompatActivity() {
                         val t = input.text.toString().trim()
                         if (t.isNotEmpty()) lifecycleScope.launch {
                             try {
-                                SoftRepo.reviewReply(appId, r.optString("id"), t)
+                                SoftRepo.reviewReply(appId, r.optInt("id"), t)
                                 load()
                             } catch (e: Exception) { Toasts.e(e.message ?: "失败") }
                         }

@@ -26,6 +26,10 @@ data class UserInfo(
     val signedToday: Boolean = false,
     val raw: String
 ) {
+    /** 会员过期显示文案 */
+    val vipUntil: String get() = vipExpire
+
+    val isVipNow: Boolean get() = isVip
     companion object {
         private fun b(v: Any?) = v == true || v == 1 || v == "1" || v == "true"
         private fun i(v: Any?) = v?.toString()?.toIntOrNull() ?: 0
