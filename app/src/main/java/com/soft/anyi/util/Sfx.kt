@@ -7,7 +7,7 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import com.soft.anyi.R
-import com.soft.anyi.data.SfxConfig
+import com.soft.anyi.data.AppConfig.SfxConfig
 import com.soft.anyi.SoftApp
 
 /**

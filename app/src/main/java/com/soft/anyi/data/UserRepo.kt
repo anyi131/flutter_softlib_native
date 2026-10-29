@@ -31,17 +31,20 @@ object UserRepo {
         Session.user() ?: throw Http.ApiException(-1, "登录返回缺少用户信息")
     }
 
-    /** QQ SDK 登录（openid + accessToken 换本站 token） */
-    suspend fun qqSdkLogin(openid: String, accessToken: String): Boolean = withContext(Dispatchers.IO) {
+    /** QQ SDK 登录（openid + accessToken 换本站 token / need_register） */
+    suspend fun qqSdkLoginRaw(openid: String, accessToken: String): JSONObject = withContext(Dispatchers.IO) {
         val d = Http.post(
             "/api/softlib/user/qq_sdk_login",
             mapOf("openid" to openid, "access_token" to accessToken),
             auth = false
         )
-        val token = d.optString("token")
-        if (token.isEmpty()) return@withContext false
-        Session.save(token, UserInfo.fromJson(d.optJSONObject("user") ?: d))
-        true
+        d
+    }
+
+    suspend fun loginByToken(token: String, nickname: String = "", avatar: String = "") = withContext(Dispatchers.IO) {
+        val d = Http.get("/api/softlib/user/mine")
+        val u = UserInfo.fromJson(d.optJSONObject("user") ?: d.optJSONObject("info") ?: d)
+        Session.save(token, u)
     }
 
     suspend fun sendCode(email: String, scene: String = "register") = withContext(Dispatchers.IO) {

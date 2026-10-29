@@ -65,6 +65,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.4'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.webkit:webkit:1.11.0'
+    // QQ 登录（腾讯官方 SDK，本地 jar）
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     // 网络
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
     implementation 'org.json:json:20240303'

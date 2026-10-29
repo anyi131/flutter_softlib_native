@@ -36,9 +36,17 @@
         <activity android:name=".ui.details.DetailsActivity" android:exported="false" />
         <activity android:name=".ui.search.AppSearchActivity" android:exported="false" />
         <activity android:name=".ui.auth.LoginActivity" android:exported="false" />
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            tools:replace="android:launchMode" />
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="behind"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".ui.auth.RegisterActivity" android:exported="false" />
         <activity android:name=".ui.auth.ResetActivity" android:exported="false" />
-        <activity android:name=".ui.auth.QQLoginActivity" android:exported="false" />
         <activity android:name=".ui.mine.MineEditActivity" android:exported="false" />
         <activity android:name=".ui.mine.InviteActivity" android:exported="false" />
         <activity android:name=".ui.mine.CardShopActivity" android:exported="false" />

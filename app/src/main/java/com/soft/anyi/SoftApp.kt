@@ -6,6 +6,7 @@ import com.soft.anyi.data.AppConfig
 import com.soft.anyi.data.ConfigRepo
 import com.soft.anyi.data.Session
 import com.soft.anyi.util.DeviceInfo
+import com.soft.anyi.util.QQAuthCache
 import com.soft.anyi.util.Sfx
 import com.soft.anyi.util.Toasts
 import kotlinx.coroutines.CoroutineScope
@@ -49,6 +50,7 @@ class SoftApp : Application() {
         Session.init(this)
 
         // 音效偏好（对应 SoundUtil.init()）
+        QQAuthCache.init(this)
         Sfx.init(this)
 
         // 远程配置拉取 + 缓存（后台可关）—— 对应 SoftService.fetchConfig

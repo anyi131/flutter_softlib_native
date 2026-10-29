@@ -78,7 +78,10 @@ class RegisterActivity : AppCompatActivity() {
                 it.isEnabled = false
                 lifecycleScope.launch {
                     try {
-                        UserRepo.register(u, "", p)
+                        UserRepo.register(u, "", p,
+                            bindOpenid = QQAuthCache.pendingOpenid,
+                            bindToken = QQAuthCache.pendingToken)
+                        QQAuthCache.clearPending()
                         Toasts.s("注册成功，请登录")
                         finish()
                     } catch (e: Exception) {
