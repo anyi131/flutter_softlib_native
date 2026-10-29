@@ -36,7 +36,7 @@ class HistoryActivity : AppCompatActivity() {
                 if (ids.isEmpty()) {
                     box.addView(TextView(this@HistoryActivity).apply {
                         text = "暂无浏览记录"
-                        textSize = 14f; setTextColor(getColor(R.color.t3))
+                        textSize = 14f; setTextColor(getColor(R.color.t2))
                         gravity = android.view.Gravity.CENTER
                         setPadding(0, Ui.dp(this@HistoryActivity, 100), 0, 0)
                     })

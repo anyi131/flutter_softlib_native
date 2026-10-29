@@ -51,7 +51,7 @@ class CommentsActivity : AppCompatActivity() {
         // 底部发布条
         val input = EditText(ctx).apply {
             hint = "说点什么…"
-            singleLine = true
+            setSingleLine()
             textSize = 14f
             setBackgroundResource(R.drawable.bg_card)
             setPadding(Ui.dp(ctx, 12), Ui.dp(ctx, 8), Ui.dp(ctx, 12), Ui.dp(ctx, 8))

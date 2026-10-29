@@ -45,7 +45,7 @@ class FavoritesActivity : AppCompatActivity() {
     private fun empty(): TextView = TextView(this).apply {
         text = "还没有收藏，去首页看看吧"
         textSize = 14f
-        setTextColor(getColor(R.color.t3))
+        setTextColor(getColor(R.color.t2))
         gravity = android.view.Gravity.CENTER
         setPadding(0, 120, 0, 0)
     }

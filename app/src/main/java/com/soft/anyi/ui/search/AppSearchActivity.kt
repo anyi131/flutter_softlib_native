@@ -53,12 +53,12 @@ class AppSearchActivity : AppCompatActivity() {
         // 搜索框
         val input = EditText(ctx).apply {
             hint = "输入名称关键字"
-            singleLine = true
+            setSingleLine()
             imeOptions = android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH
             background = ctx.getDrawable(R.drawable.bg_card)
             setPadding(Ui.dp(ctx, 14), Ui.dp(ctx, 10), Ui.dp(ctx, 14), Ui.dp(ctx, 10))
-            setOnEditorActionListener { _, _, event ->
-                if (event == null) { search(input.text.toString()); true } else false
+            setOnEditorActionListener { v, _, event ->
+                if (event == null) { search(v.text.toString()); true } else false
             }
         }
         root.addView(input, LinearLayout.LayoutParams(-1, -2).apply { topMargin = Ui.dp(ctx, 12) })
@@ -71,7 +71,7 @@ class AppSearchActivity : AppCompatActivity() {
     private fun search(kw: String) {
         val k = kw.trim()
         if (k.isEmpty()) return
-        Sfx.click()
+        Sfx.play("click")
         lifecycleScope.launch {
             try {
                 results = SoftRepo.search(k)

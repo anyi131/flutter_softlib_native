@@ -68,7 +68,7 @@ class MessageActivity : AppCompatActivity() {
         if (list.isEmpty()) {
             box.addView(TextView(ctx).apply {
                 text = "暂无消息"; gravity = Gravity.CENTER; setPadding(0, Ui.dp(ctx, 60), 0, 0)
-                setTextColor(ctx.getColor(R.color.t3))
+                setTextColor(ctx.getColor(R.color.t2))
             })
             return
         }
@@ -88,7 +88,7 @@ class MessageActivity : AppCompatActivity() {
                 }, LinearLayout.LayoutParams(-1, -2).apply { topMargin = Ui.dp(ctx, 4) })
                 addView(TextView(ctx).apply {
                     text = m.time; textSize = 11f
-                    setTextColor(ctx.getColor(R.color.t3))
+                    setTextColor(ctx.getColor(R.color.t2))
                 }, LinearLayout.LayoutParams(-1, -2).apply { topMargin = Ui.dp(ctx, 6) })
                 if (!m.read) {
                     setOnClickListener {

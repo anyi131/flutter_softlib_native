@@ -165,7 +165,7 @@ object UserRepo {
                     val o = arr.optJSONObject(n) ?: return@mapNotNull null
                     Card(
                         o.optString("code"), o.optString("name", o.optString("card_name")),
-                        o.optInt("days"), o.optInt("is_used", o.optInt("used", 0)) == 1
+                        o.optInt("days"), o.optInt("is_used", o.optInt("used", 0)) == 1, o
                     )
                 }
             }

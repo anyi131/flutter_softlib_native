@@ -1,6 +1,8 @@
 package com.soft.anyi.ui.common
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +24,13 @@ class WebViewActivity : AppCompatActivity() {
     private lateinit var web: WebView
     private lateinit var bar: ProgressBar
     private var startTime = 0L
+
+    companion object {
+        fun start(ctx: Context, url: String, title: String = "浏览") {
+            ctx.startActivity(Intent(ctx, WebViewActivity::class.java)
+                .putExtra("url", url).putExtra("title", title))
+        }
+    }
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {

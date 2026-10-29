@@ -19,8 +19,8 @@ object AppCard {
         val card = LinearLayout(ctx).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
-            background = ctx.getDrawable(R.drawable.bg_card)
-            setPadding(ctx.let { Ui.dp(it, 12) }, Ui.dp(it, 12), Ui.dp(it, 12), Ui.dp(it, 12))
+            background = androidx.core.content.ContextCompat.getDrawable(ctx, R.drawable.bg_card)
+            setPadding(Ui.dp(ctx, 12), Ui.dp(ctx, 12), Ui.dp(ctx, 12), Ui.dp(ctx, 12))
         }
         val icon = ImageView(ctx).apply { scaleType = ImageView.ScaleType.CENTER_CROP }
         card.addView(icon, LinearLayout.LayoutParams(Ui.dp(ctx, 52), Ui.dp(ctx, 52)))
@@ -35,7 +35,7 @@ object AppCard {
             maxLines = 1
         })
         col.addView(TextView(ctx).apply {
-            text = a.brief.ifBlank { a.developer }
+            text = a.description.ifBlank { "暂无简介" }
             textSize = 12f
             setTextColor(ctx.getColor(R.color.t2))
             maxLines = 1

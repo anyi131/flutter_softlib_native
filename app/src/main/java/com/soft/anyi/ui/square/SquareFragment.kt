@@ -17,7 +17,6 @@ import com.soft.anyi.R
 import com.soft.anyi.data.Session
 import com.soft.anyi.data.PostRepo
 import com.soft.anyi.ui.common.Ui
-import com.soft.anyi.util.Session
 import com.soft.anyi.util.Toasts
 import kotlinx.coroutines.launch
 
@@ -79,7 +78,7 @@ class SquareFragment : Fragment() {
             })
         }
         adapter = PostAdapter(posts) { p ->
-            startActivity(android.content.Intent(ctx, PostDetailActivity::class.java).putExtra("post", p.raw))
+            startActivity(android.content.Intent(ctx, PostDetailActivity::class.java).putExtra("post_json", p.raw.toString()))
         }
         list.adapter = adapter
         refresh.addView(list, ViewGroup.LayoutParams(-1, -1))
@@ -93,10 +92,10 @@ class SquareFragment : Fragment() {
         refresh.isRefreshing = posts.isEmpty()
         lifecycleScope.launch {
             try {
-                val (list, more) = PostRepo.list(page)
+                val list = PostRepo.posts(page)
                 if (page == 1) posts.clear()
                 posts.addAll(list)
-                hasMore = more
+                hasMore = list.size >= 10
                 adapter.notifyDataSetChanged()
             } catch (e: Exception) {
                 Toasts.e("加载失败：${e.message}")

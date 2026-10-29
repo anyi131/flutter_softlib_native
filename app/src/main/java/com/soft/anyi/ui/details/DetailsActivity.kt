@@ -24,6 +24,7 @@ import com.soft.anyi.util.FavStore
 import com.soft.anyi.util.Prefs
 import com.soft.anyi.util.Sfx
 import com.soft.anyi.util.Toasts
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
@@ -218,11 +219,19 @@ class DetailsActivity : AppCompatActivity() {
         Sfx.play("download")
         lifecycleScope.launch {
             try {
-                val resolved = SoftRepo.resolve(a.id)
-                val url = resolved.optString("url")
-                if (url.isEmpty()) throw com.soft.anyi.data.Http.ApiException(-1, resolved.optString("msg", "未解析到直链"))
+                val url = a.downloadTarget
+                if (url.isEmpty()) throw com.soft.anyi.data.Http.ApiException(-1, "未解析到直链")
                 com.soft.anyi.data.UserRepo.downloadLog(a.title, a.id)
-                ApkInstaller.downloadAndInstall(this@DetailsActivity, url, a.title)
+                val dlId = ApkInstaller.enqueue(url, a.title)
+                Toasts.s("已加入下载队列")
+                var last = -1
+                while (true) {
+                    val st = ApkInstaller.query(dlId)
+                    if (st.progress != last) { last = st.progress; }
+                    if (st.status == DownloadManager.STATUS_SUCCESSFUL) { st.fileUri?.let { ApkInstaller.installFromUri(this@DetailsActivity, it) }; break }
+                    if (st.status == DownloadManager.STATUS_FAILED) throw com.soft.anyi.data.Http.ApiException(-1, "下载失败")
+                    delay(800)
+                }
                 Toasts.s("已开始下载")
             } catch (e: Exception) {
                 Toasts.e(e.message ?: "下载失败")

@@ -44,7 +44,7 @@ class WishActivity : AppCompatActivity() {
                 if (list.isEmpty()) {
                     box.addView(TextView(this@WishActivity).apply {
                         text = "还没有心愿，快来提一个"
-                        textSize = 14f; setTextColor(getColor(R.color.t3))
+                        textSize = 14f; setTextColor(getColor(R.color.t2))
                         gravity = android.view.Gravity.CENTER
                         setPadding(0, Ui.dp(this@WishActivity, 100), 0, 0)
                     })

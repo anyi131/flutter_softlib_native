@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.soft.anyi.R
+import com.soft.anyi.data.AppCat
 import com.soft.anyi.data.AppItem
 import com.soft.anyi.data.SoftRepo
 import com.soft.anyi.ui.common.AppAction
@@ -124,7 +125,8 @@ class HomeFragment : Fragment() {
         // 分类 pill
         catRow.removeAllViews()
         val all: List<AppCat> = listOf(AppCat(0, "全部")) + cats
-        all.forEach { c ->            val on = c.id == currentCat
+        all.forEach { c ->
+            val on = c.id == currentCat
             catRow.addView(TextView(ctx).apply {
                 text = c.title
                 textSize = 13f

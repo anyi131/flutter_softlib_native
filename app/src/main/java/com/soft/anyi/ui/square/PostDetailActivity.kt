@@ -36,7 +36,7 @@ class PostDetailActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val p = PostRepo.detail(postId)
-                render(box, p)
+                if (p == null) Toasts.e("帖子不存在") else render(box, p.raw)
             } catch (e: Exception) {
                 Toasts.e("加载失败：${e.message}")
             }
@@ -52,7 +52,7 @@ class PostDetailActivity : AppCompatActivity() {
                     .let { it.topMargin = Ui.dp(ctx, top); layoutParams = it }
             }
         box.addView(tv(p.optString("title"), 20f, R.color.t1, 0))
-        box.addView(tv("${p.optString("nickname", "匿名")} · ${p.optString("time", "")}", 12f, R.color.t3, 8))
+        box.addView(tv("${p.optString("nickname", "匿名")} · ${p.optString("time", "")}", 12f, R.color.t2, 8))
         box.addView(tv(p.optString("content"), 15f, R.color.t2, 14))
         val like = p.optInt("likes", 0)
         box.addView(tv("👍 $like", 14f, R.color.t2, 18))

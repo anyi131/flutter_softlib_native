@@ -64,7 +64,7 @@ class ToolsFragment : Fragment() {
         // 标题 + 搜索
         val input = EditText(ctx).apply {
             hint = "搜索工具"
-            singleLine = true
+            setSingleLine()
             background = ctx.getDrawable(R.drawable.bg_card)
             setPadding(Ui.dp(ctx, 14), Ui.dp(ctx, 10), Ui.dp(ctx, 14), Ui.dp(ctx, 10))
             addTextChangedListenerCompat { kw ->

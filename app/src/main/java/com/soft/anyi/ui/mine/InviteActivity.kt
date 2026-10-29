@@ -61,7 +61,9 @@ class InviteActivity : AppCompatActivity() {
     private fun load() {
         lifecycleScope.launch {
             try {
-                val d = UserRepo.inviteInfo()
+                val d = UserRepo.inviteStats().let { st ->
+                    org.json.JSONObject().put("invites", st.invites).put("score", st.score).put("invite_code", st.code)
+                }
                 render(d)
             } catch (e: Exception) {
                 Toasts.e(e.message ?: "加载失败")
@@ -77,7 +79,7 @@ class InviteActivity : AppCompatActivity() {
         })
         codeBox.addView(TextView(this).apply {
             text = "点此复制，好友注册后双方得奖励"
-            textSize = 12f; setTextColor(getColor(R.color.t3))
+            textSize = 12f; setTextColor(getColor(R.color.t2))
         }, LinearLayout.LayoutParams(-1, -2).apply { topMargin = Ui.dp(this@InviteActivity, 4) })
         codeBox.setOnClickListener {
             val cm = getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
@@ -103,7 +105,7 @@ class InviteActivity : AppCompatActivity() {
                 })
                 addView(TextView(this@InviteActivity).apply {
                     text = o.optString("createtime", o.optString("time", ""))
-                    textSize = 11f; setTextColor(getColor(R.color.t3))
+                    textSize = 11f; setTextColor(getColor(R.color.t2))
                 }, LinearLayout.LayoutParams(-1, -2).apply { topMargin = Ui.dp(this@InviteActivity, 4) })
             }, LinearLayout.LayoutParams(-1, -2).apply {
                 topMargin = Ui.dp(this@InviteActivity, 8)

@@ -92,9 +92,12 @@ class RechargeActivity : AppCompatActivity() {
         if (picked <= 0) { Toasts.s("请选择金额"); return }
         lifecycleScope.launch {
             try {
-                val url = PayRepo.create("recharge", picked)
-                if (url.isNotEmpty()) com.soft.anyi.util.ApkInstaller.openBrowser(url)
-                else Toasts.s("下单失败")
+                val order = PayRepo.recharge(picked.toString(), "wxpay")
+                if (order.payUrl.isNotEmpty()) {
+                    com.soft.anyi.util.ApkInstaller.openBrowser(order.payUrl)
+                } else {
+                    Toasts.s("下单失败")
+                }
             } catch (e: Exception) {
                 Toasts.e(e.message ?: "下单失败")
             }

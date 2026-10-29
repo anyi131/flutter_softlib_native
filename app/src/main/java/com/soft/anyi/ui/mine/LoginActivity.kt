@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
 
         fun field(hint: String): EditText = EditText(ctx).apply {
             this.hint = hint
-            singleLine = true
+            setSingleLine()
             setBackgroundResource(R.drawable.bg_card)
             setPadding(pad, Ui.dp(ctx, 12), pad, Ui.dp(ctx, 12))
         }

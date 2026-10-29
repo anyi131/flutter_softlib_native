@@ -95,16 +95,14 @@ class VipActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val order = PayRepo.create(p.id, "wxpay")
-                val url = order.optString("pay_url", order.optString("url"))
+                val url = order.payUrl
                 if (url.isEmpty()) { Toasts.e("未获取到支付链接"); return@launch }
                 com.soft.anyi.util.ApkInstaller.openBrowser(url)
                 // 轮询订单状态（最多 60 次 × 3s）
                 var ok = false
                 for (i in 1..60) {
                     kotlinx.coroutines.delay(3000)
-                    val orderNo = order.optString("order_no", order.optString("orderid"))
-                    if (PayRepo.paid(orderNo)) { ok = true; break }
-
+                    if (PayRepo.isPaid(order.outTradeNo)) { ok = true; break }
                 }
                 if (ok) { Toasts.s("支付成功，会员已开通"); finish() }
                 else Toasts.e("支付超时或未完成")

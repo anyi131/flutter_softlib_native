@@ -74,7 +74,7 @@ class CardShopActivity : AppCompatActivity() {
         if (code.isEmpty()) { Toasts.s("请输入卡密"); return }
         lifecycleScope.launch {
             try {
-                val msg = UserRepo.cardBuy(code)
+                val msg = UserRepo.cardBuy(code.toIntOrNull() ?: 0)
                 Toasts.s(msg)
                 input.setText("")
                 loadMine()
@@ -87,7 +87,7 @@ class CardShopActivity : AppCompatActivity() {
     private fun loadMine() {
         lifecycleScope.launch {
             try {
-                val arr = UserRepo.myCards()
+                val arr = UserRepo.cardShop().first.map { it.raw }
                 render(arr)
             } catch (_: Exception) {
                 render(emptyList())
@@ -112,7 +112,7 @@ class CardShopActivity : AppCompatActivity() {
                 })
                 addView(TextView(this@CardShopActivity).apply {
                     text = listOf(o.optString("createtime", ""), o.optString("status_text", "")).filter { it.isNotEmpty() }.joinToString(" · ")
-                    textSize = 11f; setTextColor(getColor(R.color.t3))
+                    textSize = 11f; setTextColor(getColor(R.color.t2))
                 }, LinearLayout.LayoutParams(-1, -2).apply { topMargin = Ui.dp(this@CardShopActivity, 4) })
             }, LinearLayout.LayoutParams(-1, -2).apply {
                 topMargin = Ui.dp(this@CardShopActivity, 8)

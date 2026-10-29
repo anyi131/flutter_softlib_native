@@ -36,7 +36,7 @@ class AboutActivity : AppCompatActivity() {
         }, LinearLayout.LayoutParams(-1, -2))
         box.addView(TextView(this).apply {
             text = "v$ver"
-            textSize = 13f; setTextColor(getColor(R.color.t3)); gravity = android.view.Gravity.CENTER
+            textSize = 13f; setTextColor(getColor(R.color.t2)); gravity = android.view.Gravity.CENTER
         }, LinearLayout.LayoutParams(-1, -2).apply { topMargin = Ui.dp(this@AboutActivity, 6) })
 
         val cfg = SoftApp.instance.config
@@ -51,7 +51,7 @@ class AboutActivity : AppCompatActivity() {
 
         box.addView(TextView(this).apply {
             text = "客服：${cfg?.serviceUrl ?: ""}"
-            textSize = 13f; setTextColor(getColor(R.color.t3))
+            textSize = 13f; setTextColor(getColor(R.color.t2))
         }, LinearLayout.LayoutParams(-1, -2).apply { topMargin = Ui.dp(this@AboutActivity, 24) })
     }
 }

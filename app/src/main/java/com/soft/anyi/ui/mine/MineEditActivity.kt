@@ -40,7 +40,7 @@ class MineEditActivity : AppCompatActivity() {
         nick = EditText(ctx).apply {
             hint = "昵称"
             setText(u?.nickname ?: "")
-            singleLine = true
+            setSingleLine()
             background = ctx.getDrawable(R.drawable.bg_card)
             setPadding(Ui.dp(ctx, 12), Ui.dp(ctx, 10), Ui.dp(ctx, 12), Ui.dp(ctx, 10))
         }

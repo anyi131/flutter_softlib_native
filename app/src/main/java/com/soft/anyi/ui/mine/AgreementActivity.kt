@@ -34,7 +34,7 @@ class AgreementActivity : AppCompatActivity() {
             text = body.ifEmpty { "暂未配置，请联系管理员。" }
             textSize = 14f
             setTextColor(getColor(R.color.t2))
-            setLineSpacing(Ui.dp(this@AgreementActivity, 4), 1f)
+            setLineSpacing(Ui.dp(this@AgreementActivity, 4).toFloat(), 1f)
         })
     }
 }

@@ -52,7 +52,7 @@ object PayRepo {
             mapOf("plan_id" to planId, "type" to payType)
         )
         Order(
-            d.optString("out_trade_no").ifEmpty { d.optString("out_trade_no".substringBefore('_')) },
+            d.optString("out_trade_no"),
             d.optString("pay_url").ifEmpty { d.optString("url").ifEmpty { d.optString("qrcode") } }
         )
     }

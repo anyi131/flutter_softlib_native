@@ -54,7 +54,6 @@ class MineFragment : Fragment() {
 
     private fun buildUi(ctx: android.content.Context, root: LinearLayout) {
         contentRoot = root
-        this.ctx = ctx
         render()
     }
 
@@ -172,7 +171,7 @@ class MineFragment : Fragment() {
             background = ctx.getDrawable(R.drawable.bg_card)
             elevation = 2f
             setPadding(Ui.dp(ctx, 16), Ui.dp(ctx, 14), Ui.dp(ctx, 16), Ui.dp(ctx, 14))
-            val lp = RecyclerView.LayoutParams(-1, -2)
+            val lp = ViewGroup.MarginLayoutParams(-1, -2)
             lp.setMargins(Ui.dp(ctx, 12), Ui.dp(ctx, 6), Ui.dp(ctx, 12), 0)
             layoutParams = lp
             addView(TextView(ctx).apply { text = icon; textSize = 18f })
