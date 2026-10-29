@@ -81,8 +81,8 @@ class RechargeActivity : AppCompatActivity() {
                 }
             }
             val lp = android.widget.GridLayout.LayoutParams(
-                android.widget.GridLayout.spec(GridLayout.UNDEFINED, 1f),
-                android.widget.GridLayout.spec(GridLayout.UNDEFINED)
+                android.widget.GridLayout.spec(android.widget.GridLayout.UNDEFINED, 1f),
+                android.widget.GridLayout.spec(android.widget.GridLayout.UNDEFINED)
             )
             lp.width = 0; lp.height = ViewGroup.LayoutParams.WRAP_CONTENT
             tv.layoutParams = lp
