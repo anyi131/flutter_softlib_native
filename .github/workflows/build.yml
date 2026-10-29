@@ -1,0 +1,45 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ main, master ]
+    tags: [ 'v*' ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Gradle (cache)
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Build Release APK
+        run: |
+          chmod +x gradlew || true
+          # 无 gradlew 时用 gradle wrapper 生成（runner 自带 gradle）
+          if [ ! -f gradlew ]; then gradle wrapper --gradle-version 8.7; fi
+          ./gradlew assembleRelease --no-daemon
+        env:
+          ANDROID_STORE_PASSWORD: 'bm666...'
+          ANDROID_KEY_ALIAS: 'ayrjh'
+          ANDROID_KEY_PASSWORD: 'bm666...'
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-apk
+          path: app/build/outputs/apk/release/app-release.apk
+
+      - name: Attach APK to Release (tag builds only)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: app/build/outputs/apk/release/app-release.apk

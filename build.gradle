@@ -1,0 +1,6 @@
+// 安逸软件汇 —— 原生重构版（Kotlin）
+// 自 Flutter flutter_softlib 移植
+plugins {
+    id 'com.android.application' version '8.5.2' apply false
+    id 'org.jetbrains.kotlin.android' version '1.9.24' apply false
+}
