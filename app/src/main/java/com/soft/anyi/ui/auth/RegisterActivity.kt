@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.soft.anyi.R
 import com.soft.anyi.data.UserRepo
 import com.soft.anyi.ui.common.Ui
+import com.soft.anyi.util.QQAuthCache
 import com.soft.anyi.util.Toasts
 import kotlinx.coroutines.launch
 
