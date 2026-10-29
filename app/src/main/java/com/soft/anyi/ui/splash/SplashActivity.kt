@@ -15,8 +15,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import coil.load
+import androidx.lifecycle.lifecycleScope
 import com.soft.anyi.R
 import com.soft.anyi.SoftApp
 import com.soft.anyi.data.AppConfig
@@ -129,7 +129,7 @@ class SplashActivity : AppCompatActivity() {
                 } catch (_: Exception) { null }
                 c?.let {
                     cfg = it
-                    SoftApp.instance.config = it
+                    SoftApp.instance.setConfig(it)
                 }
                 cfgSettled = true
             }

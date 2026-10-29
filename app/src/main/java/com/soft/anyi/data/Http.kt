@@ -1,7 +1,6 @@
 package com.soft.anyi.data
 
 import android.util.Log
-import com.soft.anyi.AppConfig
 import com.soft.anyi.SoftApp
 import com.soft.anyi.util.AppSign
 import com.soft.anyi.util.DeviceInfo

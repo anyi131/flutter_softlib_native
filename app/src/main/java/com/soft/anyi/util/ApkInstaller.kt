@@ -99,7 +99,7 @@ object ImgSaver {
     suspend fun saveUrl(url: String): Boolean = withContext(Dispatchers.IO) {
         try {
             val rb = okhttp3.Request.Builder().url(url).get()
-            Http.client.newCall(rb.build()).execute().use { r ->
+            com.soft.anyi.data.Http.client.newCall(rb.build()).execute().use { r ->
                 val bytes = r.body?.bytes() ?: return@withContext false
                 saveBytes(bytes, "img_${System.currentTimeMillis()}.jpg")
             }

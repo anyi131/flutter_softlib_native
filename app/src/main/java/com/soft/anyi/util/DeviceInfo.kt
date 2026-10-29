@@ -1,7 +1,6 @@
 package com.soft.anyi.util
 
 import android.os.Build
-import android.util.DisplayMetrics
 import android.view.WindowManager
 import com.soft.anyi.SoftApp
 
@@ -33,9 +32,11 @@ object DeviceInfo {
 
     fun screenWidthPx(): Int {
         val wm = SoftApp.ctx().getSystemService(WindowManager::class.java) ?: return 1080
-        val m = DisplayMetrics()
-        @Suppress("DEPRECATION")
-        wm.defaultMetrics?.let { m.setTo(it) }
-        return m.widthPixels
+        return try {
+            val m = android.util.DisplayMetrics()
+            @Suppress("DEPRECATION")
+            wm.defaultDisplay.getMetrics(m)
+            m.widthPixels
+        } catch (_: Exception) { 1080 }
     }
 }

@@ -14,19 +14,23 @@ object Ui {
     fun dp(context: Context, v: Int): Int =
         TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, v.toFloat(), context.resources.displayMetrics).toInt()
 
-    fun emptyView(context: Context, text: String = "暂无内容"): View =
+    @JvmField
+    val emptyView = { context: Context, text: String ->
         TextView(context).apply {
-            text = text
+            this.text = text
             gravity = android.view.Gravity.CENTER
             textSize = 14f
             setTextColor(ContextCompat.getColor(context, R.color.t2))
             setPadding(0, dp(context, 64), 0, dp(context, 64))
         }
+    }
 
-    fun loadingView(context: Context): View =
+    @JvmField
+    val loadingView = { context: Context ->
         android.widget.ProgressBar(context).apply {
             setPadding(0, dp(context, 48), 0, dp(context, 48))
         }
+    }
 
     fun sectionTitle(context: Context, text: String): TextView =
         TextView(context).apply {
@@ -51,7 +55,7 @@ object AppAction {
                     .putExtra("title", item.title)
             )
             else -> context.startActivity(
-                android.content.Intent(context, com.soft.anyi.ui.details.AppDetailsActivity::class.java)
+                android.content.Intent(context, com.soft.anyi.ui.details.DetailsActivity::class.java)
                     .putExtra("app_id", item.id)
                     .putExtra("item", item)
             )

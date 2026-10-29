@@ -38,6 +38,20 @@ data class AppItem(
 
     val downloadTarget: String get() = if (isLocal) file else url
 
+    /** 列表副标题用：文件大小（size 别名） */
+    val sizeText: String get() = size
+
+    /** 开发者/提供方（列表副标题用，数据源没有独立字段时用 provider） */
+    val developer: String get() = ""
+
+    /** 列表角标：¥xx 购买 / 会员专享 / 免费 */
+    val priceTag: String
+        get() = when {
+            vipPrice.isNotBlank() && vipPrice != "0" && vipPrice != "0.00" -> "¥$vipPrice"
+            isVipItem -> "会员"
+            else -> "免费"
+        }
+
     companion object {
         private fun i(v: Any?) = v?.toString()?.toDoubleOrNull()?.toInt() ?: 0
         private fun s(v: Any?) = v?.toString() ?: ""

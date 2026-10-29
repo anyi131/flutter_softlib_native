@@ -30,6 +30,9 @@ class SoftApp : Application() {
     var config: AppConfig? = null
         private set
 
+    /** 供启动链写入最新配置（SplashActivity / 维护页刷新） */
+    fun setConfig(c: AppConfig) { config = c }
+
     override fun onCreate() {
         super.onCreate()
         instance = this

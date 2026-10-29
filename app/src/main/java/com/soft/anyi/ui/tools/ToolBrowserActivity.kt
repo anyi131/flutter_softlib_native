@@ -8,6 +8,7 @@ import android.webkit.*
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.soft.anyi.util.ImgSaver
 import com.soft.anyi.util.Toasts
 import kotlinx.coroutines.launch

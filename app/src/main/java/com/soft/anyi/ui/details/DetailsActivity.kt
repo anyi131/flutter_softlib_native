@@ -126,13 +126,9 @@ class DetailsActivity : AppCompatActivity() {
         box.addView(head)
 
         // ── 状态标签行 ──
-        val vipOnly = a.isVipOnly && !Session.isAdmin()
-        val needPay = a.price > 0
-        val tagText = when {
-            needPay -> "¥${a.price} 购买"
-            vipOnly -> "会员专享"
-            else -> "免费下载"
-        }
+        val vipOnly = a.isVipItem && !Session.isAdmin()
+        val tagText = a.priceTag
+            .let { if (it == "免费") "免费下载" else if (it == "会员") "会员专享" else "$it 购买" }
         box.addView(TextView(ctx).apply {
             text = tagText
             textSize = 12f
@@ -155,10 +151,10 @@ class DetailsActivity : AppCompatActivity() {
         box.addView(btn, LinearLayout.LayoutParams(-1, -2).apply { topMargin = Ui.dp(ctx, 16) })
 
         // ── 介绍 ──
-        if (a.desc.isNotEmpty()) {
+        if (a.description.isNotEmpty()) {
             section("应用介绍")
             box.addView(TextView(ctx).apply {
-                text = a.desc
+                text = a.description
                 textSize = 14f
                 setTextColor(ctx.getColor(R.color.t1))
                 setLineSpacing(Ui.dp(ctx, 3).toFloat(), 1f)
@@ -166,11 +162,11 @@ class DetailsActivity : AppCompatActivity() {
         }
 
         // ── 截图 ──
-        if (a.shots.isNotEmpty()) {
+        if (a.screenshots.isNotEmpty()) {
             section("应用截图")
             val h = HorizontalScrollView(ctx).apply { isHorizontalScrollBarEnabled = false }
             val row = LinearLayout(ctx).apply { orientation = LinearLayout.HORIZONTAL }
-            a.shots.forEach { url ->
+            a.screenshots.forEach { url ->
                 val iv = ImageView(ctx).apply {
                     adjustViewBounds = true
                     setBackgroundResource(R.drawable.bg_card)
@@ -178,7 +174,9 @@ class DetailsActivity : AppCompatActivity() {
                     layoutParams = LinearLayout.LayoutParams(Ui.dp(ctx, 160), Ui.dp(ctx, 280)).apply {
                         marginEnd = Ui.dp(ctx, 8)
                     }
-                    setOnClickListener { PhotoViewer.show(ctx, a.shots, a.shots.indexOf(url)) }
+                    setOnClickListener {
+                        PhotoViewer.show(ctx, a.screenshots, a.screenshots.indexOf(url))
+                    }
                 }
                 io.coil_image.CoilImage.load(ctx, ApiHost.proxyImg(url), iv)
                 row.addView(iv)
@@ -188,7 +186,7 @@ class DetailsActivity : AppCompatActivity() {
         }
 
         // ── 评论入口 ──
-        section("评论 (${a.comments})")
+        section("评论 (${a.scoreCount})")
         box.addView(TextView(ctx).apply {
             text = "查看全部评论 / 发表评论"
             setTextColor(ctx.getColor(R.color.brand))
@@ -210,7 +208,7 @@ class DetailsActivity : AppCompatActivity() {
         val a = app ?: return
         if (downloading) return
         // 会员专享校验
-        if (a.isVipOnly && !Session.isLoggedIn()) {
+        if (a.isVipItem && !Session.isLoggedIn()) {
             Toasts.s("该资源为会员专享，请先开通会员")
             startActivity(Intent(this, VipActivity::class.java))
             return

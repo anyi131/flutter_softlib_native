@@ -8,6 +8,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import com.soft.anyi.R
 import com.soft.anyi.data.SfxConfig
+import com.soft.anyi.SoftApp
 
 /**
  * 音效开关（对应 Flutter 版 SoundUtil）。
@@ -67,7 +68,7 @@ object Sfx {
             else -> return
         }
         val p = pool ?: return
-        val sid = ids[res] ?: p.load(App.ctx(), res, 1).also { ids[res] = it }
+        val sid = ids[res] ?: p.load(SoftApp.ctx(), res, 1).also { ids[res] = it }
         p.play(sid, 1f, 1f, 1, 0, 1f)
     }
 
