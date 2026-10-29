@@ -87,7 +87,9 @@ class CardShopActivity : AppCompatActivity() {
     private fun loadMine() {
         lifecycleScope.launch {
             try {
-                val arr = UserRepo.cardShop().first.map { it.raw }
+                val (cards, _) = UserRepo.cardShop()
+                val arr = cards.map { org.json.JSONObject()
+                    .put("code", it.code).put("name", it.name).put("days", it.days).put("used", it.used) }
                 render(arr)
             } catch (_: Exception) {
                 render(emptyList())

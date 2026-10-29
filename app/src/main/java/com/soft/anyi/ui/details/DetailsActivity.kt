@@ -66,7 +66,6 @@ class DetailsActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 app = SoftRepo.detail(id)
-                SoftRepo.view(id) // 浏览计数
                 render()
             } catch (e: Exception) {
                 Toasts.e("加载失败：${e.message}")

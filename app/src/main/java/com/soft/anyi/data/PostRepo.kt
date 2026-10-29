@@ -30,7 +30,8 @@ object PostRepo {
         val comments: Int,
         val liked: Boolean,
         val time: String,
-        val catId: Int
+        val catId: Int,
+        val raw: JSONObject = JSONObject()
     ) {
         companion object {
             fun fromJson(o: JSONObject): Post {
@@ -49,7 +50,8 @@ object PostRepo {
                     comments = o.optInt("comments", o.optInt("comment_count", 0)),
                     liked = o.optBoolean("liked", o.optInt("is_like", 0) == 1),
                     time = o.optString("createtime").ifEmpty { o.optString("time") },
-                    catId = o.optInt("cat_id")
+                    catId = o.optInt("cat_id"),
+                    raw = o
                 )
             }
 

@@ -157,7 +157,7 @@ object UserRepo {
         d.optString("msg", "兑换成功")
     }
 
-    data class Card(val code: String, val name: String, val days: Int, val used: Boolean) {
+    data class Card(val code: String, val name: String, val days: Int, val used: Boolean, val raw: JSONObject = JSONObject()) {
         companion object {
             fun listFrom(d: JSONObject): List<Card> {
                 val arr = d.optJSONArray("cards") ?: d.optJSONArray("list") ?: return emptyList()

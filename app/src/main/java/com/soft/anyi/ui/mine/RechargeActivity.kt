@@ -80,9 +80,11 @@ class RechargeActivity : AppCompatActivity() {
                     picked = p; renderPlans()
                 }
             }
-            val lp = android.widget.GridLayout.LayoutParams()
+            val lp = android.widget.GridLayout.LayoutParams(
+                android.widget.GridLayout.spec(GridLayout.UNDEFINED, 1f),
+                android.widget.GridLayout.spec(GridLayout.UNDEFINED)
+            )
             lp.width = 0; lp.height = ViewGroup.LayoutParams.WRAP_CONTENT
-            lp.columnSpec = android.widget.GridLayout.spec(GridLayout.UNDEFINED, 1f)
             tv.layoutParams = lp
             grid.addView(tv)
         }

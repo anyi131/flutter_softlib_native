@@ -122,6 +122,14 @@ object Wish {
         if (arr == null) emptyList<JSONObject>()
         else (0 until arr.length()).mapNotNull { arr.optJSONObject(it) }
     }
+    suspend fun add(appName: String, desc: String): String = withContext(Dispatchers.IO) {
+        val d = Http.post("/api/softlib/wishadd", mapOf("name" to appName, "desc" to desc))
+        d.optString("msg", "已提交")
+    }
+    suspend fun vote(id: Int): String = withContext(Dispatchers.IO) {
+        val d = Http.post("/api/softlib/wishvote", mapOf("id" to id))
+        d.optString("msg", "已支持")
+    }
     suspend fun mine(): List<JSONObject> = withContext(Dispatchers.IO) {
         val d = Http.post("/api/softlib/wishmine")
         val arr = d.optJSONArray("list") ?: return@withContext emptyList()
