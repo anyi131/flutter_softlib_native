@@ -123,7 +123,7 @@ class HomeFragment : Fragment() {
 
         // 分类 pill
         catRow.removeAllViews()
-        val all = listOf(AppCat(0, "全部")) + cats
+        val all: List<AppCat> = listOf(AppCat(0, "全部")) + cats
         all.forEach { c ->            val on = c.id == currentCat
             catRow.addView(TextView(ctx).apply {
                 text = c.title

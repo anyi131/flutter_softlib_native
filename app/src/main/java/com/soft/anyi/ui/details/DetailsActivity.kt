@@ -18,6 +18,7 @@ import com.soft.anyi.data.Session
 import com.soft.anyi.data.SoftRepo
 import com.soft.anyi.ui.common.Pager
 import com.soft.anyi.ui.common.Ui
+import com.soft.anyi.ui.mine.VipActivity
 import com.soft.anyi.util.ApkInstaller
 import com.soft.anyi.util.FavStore
 import com.soft.anyi.util.Prefs

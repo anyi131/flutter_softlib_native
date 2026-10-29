@@ -51,7 +51,7 @@ class MineEditActivity : AppCompatActivity() {
             if (name.isEmpty()) { Toasts.s("昵称不能为空"); return@pill }
             lifecycleScope.launch {
                 try {
-                    UserRepo.updateProfile(nickname = name)
+                    UserRepo.updateProfile(mapOf<String, Any?>("nickname" to name))
                     Toasts.s("已保存")
                     finish()
                 } catch (e: Exception) { Toasts.e(e.message ?: "保存失败") }

@@ -116,7 +116,12 @@ object WishRepo {
 
 /** 心愿单仓库别名（MineFragment 用 Wish.list()/add） */
 object Wish {
-    suspend fun list(): List<JSONObject> = WishRepo.list()
+    suspend fun list(): List<JSONObject> = withContext(Dispatchers.IO) {
+        val d = Http.post("/api/softlib/wishlist")
+        val arr = d.optJSONArray("list")
+        if (arr == null) emptyList<JSONObject>()
+        else (0 until arr.length()).mapNotNull { arr.optJSONObject(it) }
+    }
     suspend fun mine(): List<JSONObject> = withContext(Dispatchers.IO) {
         val d = Http.post("/api/softlib/wishmine")
         val arr = d.optJSONArray("list") ?: return@withContext emptyList()
@@ -124,7 +129,15 @@ object Wish {
     }
 }
 
-/** 任务中心（对应 TaskService：输入口令领取奖励） */
+/** 任务中心备用接口（未使用，保留占位） */
+object TaskExtra {
+    suspend fun claim(code: String): JSONObject = withContext(Dispatchers.IO) {
+        Http.post("/api/softlib/task/claim", mapOf("code" to code))
+    }
+    suspend fun info(): JSONObject = withContext(Dispatchers.IO) {
+        Http.post("/api/softlib/task/info")
+    }
+}
 object TaskRepo {
     suspend fun config(): JSONObject? = withContext(Dispatchers.IO) {
         try { Http.post("/api/softlib/taskpwdinfo") } catch (_: Exception) { null }

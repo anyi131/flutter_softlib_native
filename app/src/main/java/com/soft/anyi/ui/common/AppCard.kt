@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.soft.anyi.R
 import com.soft.anyi.data.ApiHost
 import com.soft.anyi.data.AppItem
+import com.soft.anyi.data.Session
 import io.coil_image.CoilImage
 
 /** 软件卡片（首页/搜索/收藏复用，对应 widgets/app_card.dart） */

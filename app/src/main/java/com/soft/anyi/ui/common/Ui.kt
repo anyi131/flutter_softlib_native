@@ -72,7 +72,7 @@ object Ui {
 
     fun sectionTitle(context: Context, text: String): TextView =
         TextView(context).apply {
-            text = text
+            this.text = text
             textSize = 20f
             setTypeface(typeface, android.graphics.Typeface.BOLD)
             setTextColor(ContextCompat.getColor(context, R.color.t1))
@@ -95,7 +95,7 @@ object AppAction {
             else -> context.startActivity(
                 android.content.Intent(context, com.soft.anyi.ui.details.DetailsActivity::class.java)
                     .putExtra("app_id", item.id)
-                    .putExtra("item", item)
+                    .putExtra("item_json", item.toJson().toString())
             )
         }
         com.soft.anyi.util.FavStore.addHistory(item.id)

@@ -62,7 +62,7 @@ class MessageActivity : AppCompatActivity() {
         }
     }
 
-    private fun render(list: List<JSONObject>) {
+    private fun render(list: List<MessageRepo.Message>) {
         val ctx = this
         box.removeAllViews()
         if (list.isEmpty()) {
@@ -78,23 +78,22 @@ class MessageActivity : AppCompatActivity() {
                 background = ctx.getDrawable(R.drawable.bg_card)
                 setPadding(Ui.dp(ctx, 14), Ui.dp(ctx, 12), Ui.dp(ctx, 14), Ui.dp(ctx, 12))
                 addView(TextView(ctx).apply {
-                    text = m.optString("title", "通知")
+                    text = m.title
                     textSize = 15f; setTextColor(ctx.getColor(R.color.t1))
                     setTypeface(typeface, android.graphics.Typeface.BOLD)
                 })
                 addView(TextView(ctx).apply {
-                    text = m.optString("content", ""); textSize = 13f
+                    text = m.content; textSize = 13f
                     setTextColor(ctx.getColor(R.color.t2))
                 }, LinearLayout.LayoutParams(-1, -2).apply { topMargin = Ui.dp(ctx, 4) })
                 addView(TextView(ctx).apply {
-                    text = m.optString("created_at", ""); textSize = 11f
+                    text = m.time; textSize = 11f
                     setTextColor(ctx.getColor(R.color.t3))
                 }, LinearLayout.LayoutParams(-1, -2).apply { topMargin = Ui.dp(ctx, 6) })
-                val unread = m.optInt("is_read", 1) == 0
-                if (unread) {
+                if (!m.read) {
                     setOnClickListener {
                         lifecycleScope.launch {
-                            try { MessageRepo.markRead(m.optInt("id")) } catch (_: Exception) {}
+                            try { MessageRepo.markRead(m.id); load() } catch (_: Exception) {}
                         }
                     }
                 }

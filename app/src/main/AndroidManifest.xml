@@ -33,7 +33,7 @@
         </activity>
 
         <activity android:name=".ui.main.MainActivity" android:exported="false" />
-        <activity android:name=".ui.details.AppDetailsActivity" android:exported="false" />
+        <activity android:name=".ui.details.DetailsActivity" android:exported="false" />
         <activity android:name=".ui.search.AppSearchActivity" android:exported="false" />
         <activity android:name=".ui.auth.LoginActivity" android:exported="false" />
         <activity android:name=".ui.auth.RegisterActivity" android:exported="false" />
@@ -41,14 +41,14 @@
         <activity android:name=".ui.auth.QQLoginActivity" android:exported="false" />
         <activity android:name=".ui.mine.MineEditActivity" android:exported="false" />
         <activity android:name=".ui.mine.InviteActivity" android:exported="false" />
-        <activity android:name=".ui.mine.VipActivity" android:exported="false" />
-        <activity android:name=".ui.mine.RechargeActivity" android:exported="false" />
         <activity android:name=".ui.mine.CardShopActivity" android:exported="false" />
+        <activity android:name=".ui.mine.RechargeActivity" android:exported="false" />
+        <activity android:name=".ui.fav.FavoritesActivity" android:exported="false" />
         <activity android:name=".ui.mine.AboutActivity" android:exported="false" />
+        <activity android:name=".ui.mine.VipActivity" android:exported="false" />
         <activity android:name=".ui.mine.AgreementActivity" android:exported="false" />
         <activity android:name=".ui.message.MessageActivity" android:exported="false" />
         <activity android:name=".ui.wish.WishActivity" android:exported="false" />
-        <activity android:name=".ui.fav.FavoritesActivity" android:exported="false" />
         <activity android:name=".ui.fav.HistoryActivity" android:exported="false" />
         <activity android:name=".ui.task.TaskActivity" android:exported="false" />
         <activity android:name=".ui.square.PostDetailActivity" android:exported="false" />

@@ -38,6 +38,21 @@ data class AppItem(
 
     val downloadTarget: String get() = if (isLocal) file else url
 
+    /** 序列化为 JSON（跨 Intent 传字符串） */
+    fun toJson(): org.json.JSONObject = org.json.JSONObject().apply {
+        put("id", id); put("title", title); put("provider", provider)
+        put("url", url); put("file", file); put("icon", icon)
+        put("size", size); put("version", version); put("description", description)
+        put("cat_id", catId); put("weigh", weigh); put("views", views)
+        put("down_count", downCount); put("upload_date", uploadDate)
+        put("age_rating", ageRating)
+        put("screenshots", org.json.JSONArray(screenshots))
+        put("score_avg", scoreAvg); put("score_count", scoreCount)
+        put("is_vip_only", isVipOnly); put("vip_price", vipPrice)
+        put("is_new", isNew); put("from_folder", fromFolder); put("is_top", isTop)
+        put("url_type", urlType); put("admin_note", adminNote)
+    }
+
     /** 列表副标题用：文件大小（size 别名） */
     val sizeText: String get() = size
 
